@@ -1,6 +1,10 @@
 package com.qsp.person_springboot.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +29,31 @@ public class PersonController {
 				return "failed to save";
 			}
 		}
+	
+	@PostMapping("/saveall")
+	public String savePersonAll(@RequestBody List<Person>list) {
+		
+		List<Person> person2= repo.saveAll(list);
+		if(person2!=null) {
+			return "save successfull";
+			}
+			else {
+				return "failed to save";
+			}
+		} 
+	
+	
+	@GetMapping("/fetch")
+	public Optional<Person> fetch(Integer id) {
+		
+		Optional<Person> person =repo.findById(id);
+		if(person.isPresent()) {
+			return person;
+		} else {
+			return null; 
+		}
+	}
+	
 		
 	}
 	
